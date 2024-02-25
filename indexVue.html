@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сортировка</title>
+</head>
+
+<body>
+  <div id="hw">
+    <button @click="sorted">Сортировка: {{sortedText}}</button>
+      <div v-for="product in sortedProduct" class="products">
+        <h2>{{product.name}}</h2>
+        <p>{{product.price}}</p>
+      </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const hw = {
+      data() {
+        return {
+          sortedText: "По возрастанию",
+          isSorted: 0,
+          products: [{
+            name: "Ноутбук",
+            price: 100000,
+          },
+          {
+            name: "Смартфон",
+            price: 50000,
+          },
+          {
+            name: "Клавиатура",
+            price: 8000,
+          },
+          {
+            name: "Микрофон",
+            price: 20000,
+          }]
+        }
+      },
+      methods: {
+        sorted() {
+          this.isSorted = (this.isSorted === 1) ? 2 : 1;
+          this.sortedText = (this.isSorted === 1) ? "По убыванию" : "По возрастанию";
+        }
+      },
+      computed: {
+        sortedProduct() {
+          switch (this.isSorted) {
+            case 1: return this.products.sort((d1, d2) => (d1.price > d2.price) ? 1 : -1);
+            case 2: return this.products.sort((d1, d2) => (d1.price < d2.price) ? 1 : -1);
+            default: return this.products;
+          }
+        }
+      }
+    }
+
+
+    Vue.createApp(hw).mount('#hw'); 
+  </script>
+</body>
+
+</html>
